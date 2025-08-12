@@ -1,0 +1,498 @@
+// 游戏核心逻辑
+class MisplacedGiftsGame {
+    constructor() {
+        this.currentScene = 'start';
+        this.gameHistory = [];
+        this.settings = {
+            textSpeed: 50,
+            autoPlay: false,
+            soundEffects: true
+        };
+        this.saveSlots = [];
+        this.init();
+    }
+
+    init() {
+        this.loadSettings();
+        this.loadSaves();
+        this.setupEventListeners();
+        this.showScene(this.currentScene);
+    }
+
+    // 显示场景
+    showScene(sceneId) {
+        const scene = storyData[sceneId];
+        if (!scene) {
+            console.error('Scene not found:', sceneId);
+            return;
+        }
+
+        this.currentScene = sceneId;
+        this.gameHistory.push(sceneId);
+        
+        // 更新章节和时间显示
+        this.updateHeader(scene);
+        
+        // 显示故事文本
+        this.displayText(scene.text);
+        
+        // 显示选项
+        this.displayChoices(scene.choices);
+        
+        // 更新进度条
+        this.updateProgress();
+        
+        // 如果是结局，显示特殊效果
+        if (scene.isEnding) {
+            this.showEndingEffect();
+        }
+    }
+
+    // 更新头部信息
+    updateHeader(scene) {
+        if (scene.chapter) {
+            document.querySelector('.chapter-display').textContent = scene.chapter;
+        }
+        if (scene.time) {
+            document.querySelector('.time-display').textContent = scene.time;
+        }
+    }
+
+    // 显示文本（带打字机效果）
+    displayText(text) {
+        const storyElement = document.getElementById('story-text');
+        storyElement.innerHTML = '';
+        
+        if (this.settings.textSpeed === 100) {
+            // 立即显示全部文本
+            storyElement.textContent = text;
+        } else {
+            // 打字机效果
+            let index = 0;
+            const speed = 101 - this.settings.textSpeed;
+            
+            const typeWriter = () => {
+                if (index < text.length) {
+                    storyElement.textContent += text.charAt(index);
+                    index++;
+                    setTimeout(typeWriter, speed);
+                }
+            };
+            
+            typeWriter();
+        }
+    }
+
+    // 显示选项
+    displayChoices(choices) {
+        const container = document.getElementById('choices-container');
+        container.innerHTML = '';
+        
+        if (!choices || choices.length === 0) return;
+        
+        choices.forEach((choice, index) => {
+            const button = document.createElement('button');
+            button.className = 'choice-btn';
+            button.textContent = choice.text;
+            button.onclick = () => this.makeChoice(choice.next);
+            
+            // 添加动画延迟
+            button.style.animationDelay = `${index * 0.1}s`;
+            
+            container.appendChild(button);
+        });
+    }
+
+    // 做出选择
+    makeChoice(nextSceneId) {
+        // 添加选择动画
+        const buttons = document.querySelectorAll('.choice-btn');
+        buttons.forEach(btn => btn.classList.add('fade-out'));
+        
+        // 播放音效
+        if (this.settings.soundEffects) {
+            this.playSound('click');
+        }
+        
+        // 延迟后显示下一个场景
+        setTimeout(() => {
+            this.showScene(nextSceneId);
+        }, 500);
+    }
+
+    // 更新进度条
+    updateProgress() {
+        const totalScenes = Object.keys(storyData).length;
+        const currentProgress = this.gameHistory.length;
+        const percentage = (currentProgress / totalScenes) * 100;
+        
+        document.getElementById('progress-fill').style.width = `${Math.min(percentage, 100)}%`;
+    }
+
+    // 显示结局效果
+    showEndingEffect() {
+        const storyContainer = document.querySelector('.story-container');
+        storyContainer.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+        storyContainer.style.color = 'white';
+        
+        // 添加星星效果
+        for (let i = 0; i < 20; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.cssText = `
+                position: absolute;
+                width: 2px;
+                height: 2px;
+                background: white;
+                left: ${Math.random() * 100}%;
+                top: ${Math.random() * 100}%;
+                animation: twinkle 2s infinite;
+            `;
+            storyContainer.appendChild(star);
+        }
+    }
+
+    // 保存游戏
+    saveGame(slotIndex) {
+        const saveData = {
+            currentScene: this.currentScene,
+            gameHistory: this.gameHistory,
+            timestamp: new Date().toISOString(),
+            chapter: document.querySelector('.chapter-display').textContent,
+            progress: document.getElementById('progress-fill').style.width
+        };
+        
+        this.saveSlots[slotIndex] = saveData;
+        localStorage.setItem('misplacedGifts_saves', JSON.stringify(this.saveSlots));
+        
+        this.showNotification('游戏已保存');
+    }
+
+    // 加载游戏
+    loadGame(slotIndex) {
+        const saveData = this.saveSlots[slotIndex];
+        if (!saveData) {
+            this.showNotification('存档为空');
+            return;
+        }
+        
+        this.currentScene = saveData.currentScene;
+        this.gameHistory = saveData.gameHistory;
+        this.showScene(this.currentScene);
+        
+        this.showNotification('游戏已加载');
+    }
+
+    // 重新开始
+    restartGame() {
+        if (confirm('确定要重新开始吗？当前进度将会丢失。')) {
+            this.currentScene = 'start';
+            this.gameHistory = [];
+            this.showScene(this.currentScene);
+            
+            // 清除结局效果
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => star.remove());
+            
+            const storyContainer = document.querySelector('.story-container');
+            storyContainer.style.background = 'white';
+            storyContainer.style.color = '#333';
+        }
+    }
+
+    // 设置事件监听器
+    setupEventListeners() {
+        // 保存按钮
+        document.getElementById('save-btn').onclick = () => {
+            this.showSaveModal();
+        };
+        
+        // 加载按钮
+        document.getElementById('load-btn').onclick = () => {
+            this.showLoadModal();
+        };
+        
+        // 重新开始按钮
+        document.getElementById('restart-btn').onclick = () => {
+            this.restartGame();
+        };
+        
+        // 设置按钮
+        document.getElementById('settings-btn').onclick = () => {
+            this.showSettingsModal();
+        };
+        
+        // 模态框关闭按钮
+        document.querySelectorAll('.close').forEach(closeBtn => {
+            closeBtn.onclick = function() {
+                this.parentElement.parentElement.style.display = 'none';
+            };
+        });
+        
+        // 点击模态框外部关闭
+        window.onclick = (event) => {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        };
+        
+        // 设置选项监听
+        document.getElementById('text-speed').oninput = (e) => {
+            this.settings.textSpeed = parseInt(e.target.value);
+            this.saveSettings();
+        };
+        
+        document.getElementById('auto-play').onchange = (e) => {
+            this.settings.autoPlay = e.target.checked;
+            this.saveSettings();
+        };
+        
+        document.getElementById('sound-effects').onchange = (e) => {
+            this.settings.soundEffects = e.target.checked;
+            this.saveSettings();
+        };
+        
+        // 键盘快捷键
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 's':
+                case 'S':
+                    if (e.ctrlKey) {
+                        e.preventDefault();
+                        this.quickSave();
+                    }
+                    break;
+                case 'l':
+                case 'L':
+                    if (e.ctrlKey) {
+                        e.preventDefault();
+                        this.quickLoad();
+                    }
+                    break;
+                case ' ':
+                    e.preventDefault();
+                    this.skipText();
+                    break;
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                    const choiceIndex = parseInt(e.key) - 1;
+                    const choices = document.querySelectorAll('.choice-btn');
+                    if (choices[choiceIndex]) {
+                        choices[choiceIndex].click();
+                    }
+                    break;
+            }
+        });
+    }
+
+    // 显示保存模态框
+    showSaveModal() {
+        const modal = document.getElementById('save-modal');
+        modal.style.display = 'block';
+        
+        const slotsContainer = document.getElementById('save-slots');
+        slotsContainer.innerHTML = '';
+        
+        for (let i = 0; i < 5; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'save-slot';
+            
+            if (this.saveSlots[i]) {
+                const saveData = this.saveSlots[i];
+                const date = new Date(saveData.timestamp);
+                slot.innerHTML = `
+                    <div class="save-slot-info">
+                        <div>存档 ${i + 1} - ${saveData.chapter}</div>
+                        <div class="save-slot-time">${date.toLocaleString()}</div>
+                    </div>
+                    <div class="save-slot-actions">
+                        <button class="save-slot-btn save-btn-primary" onclick="game.saveGame(${i})">覆盖</button>
+                        <button class="save-slot-btn save-btn-danger" onclick="game.deleteSave(${i})">删除</button>
+                    </div>
+                `;
+            } else {
+                slot.classList.add('empty');
+                slot.innerHTML = `
+                    <div class="save-slot-info">
+                        <div>存档 ${i + 1} - 空</div>
+                    </div>
+                    <div class="save-slot-actions">
+                        <button class="save-slot-btn save-btn-primary" onclick="game.saveGame(${i})">保存</button>
+                    </div>
+                `;
+            }
+            
+            slotsContainer.appendChild(slot);
+        }
+    }
+
+    // 显示加载模态框
+    showLoadModal() {
+        const modal = document.getElementById('save-modal');
+        modal.style.display = 'block';
+        
+        const slotsContainer = document.getElementById('save-slots');
+        slotsContainer.innerHTML = '';
+        
+        for (let i = 0; i < 5; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'save-slot';
+            
+            if (this.saveSlots[i]) {
+                const saveData = this.saveSlots[i];
+                const date = new Date(saveData.timestamp);
+                slot.innerHTML = `
+                    <div class="save-slot-info">
+                        <div>存档 ${i + 1} - ${saveData.chapter}</div>
+                        <div class="save-slot-time">${date.toLocaleString()}</div>
+                    </div>
+                    <div class="save-slot-actions">
+                        <button class="save-slot-btn save-btn-primary" onclick="game.loadGame(${i})">加载</button>
+                    </div>
+                `;
+                slot.onclick = () => this.loadGame(i);
+            } else {
+                slot.classList.add('empty');
+                slot.innerHTML = `
+                    <div class="save-slot-info">
+                        <div>存档 ${i + 1} - 空</div>
+                    </div>
+                `;
+            }
+            
+            slotsContainer.appendChild(slot);
+        }
+    }
+
+    // 显示设置模态框
+    showSettingsModal() {
+        const modal = document.getElementById('settings-modal');
+        modal.style.display = 'block';
+        
+        // 更新设置显示
+        document.getElementById('text-speed').value = this.settings.textSpeed;
+        document.getElementById('auto-play').checked = this.settings.autoPlay;
+        document.getElementById('sound-effects').checked = this.settings.soundEffects;
+    }
+
+    // 快速保存
+    quickSave() {
+        this.saveGame(0);
+    }
+
+    // 快速加载
+    quickLoad() {
+        this.loadGame(0);
+    }
+
+    // 跳过文本
+    skipText() {
+        const storyElement = document.getElementById('story-text');
+        const scene = storyData[this.currentScene];
+        if (scene) {
+            storyElement.textContent = scene.text;
+        }
+    }
+
+    // 删除存档
+    deleteSave(slotIndex) {
+        if (confirm('确定要删除这个存档吗？')) {
+            this.saveSlots[slotIndex] = null;
+            localStorage.setItem('misplacedGifts_saves', JSON.stringify(this.saveSlots));
+            this.showSaveModal(); // 刷新显示
+            this.showNotification('存档已删除');
+        }
+    }
+
+    // 保存设置
+    saveSettings() {
+        localStorage.setItem('misplacedGifts_settings', JSON.stringify(this.settings));
+    }
+
+    // 加载设置
+    loadSettings() {
+        const savedSettings = localStorage.getItem('misplacedGifts_settings');
+        if (savedSettings) {
+            this.settings = JSON.parse(savedSettings);
+        }
+    }
+
+    // 加载存档
+    loadSaves() {
+        const savedSlots = localStorage.getItem('misplacedGifts_saves');
+        if (savedSlots) {
+            this.saveSlots = JSON.parse(savedSlots);
+        } else {
+            this.saveSlots = new Array(5).fill(null);
+        }
+    }
+
+    // 显示通知
+    showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'fadeOut 0.3s ease';
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 2000);
+    }
+
+    // 播放音效
+    playSound(soundName) {
+        // 这里可以添加实际的音效播放逻辑
+        console.log('Playing sound:', soundName);
+    }
+}
+
+// 添加必要的CSS动画
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes twinkle {
+        0%, 100% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 1;
+        }
+    }
+    
+    .notification {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    }
+`;
+document.head.appendChild(style);
+
+// 初始化游戏
+const game = new MisplacedGiftsGame();

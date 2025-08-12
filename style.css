@@ -1,0 +1,382 @@
+/* 基础样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* 游戏容器 */
+.game-container {
+    width: 100%;
+    max-width: 900px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    max-height: 800px;
+}
+
+/* 游戏头部 */
+.game-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.game-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.game-info {
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.time-display, .chapter-display {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+/* 游戏主体 */
+.game-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.story-container {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+    background: white;
+}
+
+.story-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #333;
+    max-width: 100%;
+    margin: 0 auto;
+    white-space: pre-wrap;
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 选项容器 */
+.choices-container {
+    padding: 20px 30px;
+    background: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.choice-btn {
+    background: white;
+    border: 2px solid #667eea;
+    color: #667eea;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.choice-btn:hover {
+    background: #667eea;
+    color: white;
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.choice-btn::before {
+    content: "▸";
+    position: absolute;
+    left: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.choice-btn:hover::before {
+    opacity: 1;
+}
+
+/* 游戏底部 */
+.game-footer {
+    background: #f8f9fa;
+    padding: 15px 30px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.game-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+
+.control-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+    background: #764ba2;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(118, 75, 162, 0.3);
+}
+
+/* 进度条 */
+.progress-bar {
+    height: 6px;
+    background: #e0e0e0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+/* 模态框 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #667eea;
+}
+
+/* 设置选项 */
+.settings-options {
+    margin-top: 20px;
+}
+
+.setting-item {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.setting-item label {
+    font-size: 16px;
+    color: #333;
+}
+
+.setting-item input[type="range"] {
+    width: 200px;
+}
+
+.setting-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* 存档槽位 */
+.save-slots {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.save-slot {
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.save-slot:hover {
+    border-color: #667eea;
+    background: #f8f9fa;
+}
+
+.save-slot.empty {
+    opacity: 0.5;
+    font-style: italic;
+}
+
+.save-slot-info {
+    flex: 1;
+}
+
+.save-slot-time {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.save-slot-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.save-slot-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.save-btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.save-btn-danger {
+    background: #e74c3c;
+    color: white;
+}
+
+.save-slot-btn:hover {
+    transform: scale(1.05);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .game-container {
+        height: 100vh;
+        max-height: none;
+        border-radius: 0;
+    }
+
+    .game-header h1 {
+        font-size: 20px;
+    }
+
+    .story-text {
+        font-size: 16px;
+    }
+
+    .game-controls {
+        flex-wrap: wrap;
+    }
+
+    .control-btn {
+        font-size: 12px;
+        padding: 6px 15px;
+    }
+}
+
+/* 打字机效果 */
+.typing {
+    overflow: hidden;
+    white-space: pre-wrap;
+    animation: typing 2s steps(40, end);
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+/* 选择后的淡出效果 */
+.fade-out {
+    animation: fadeOut 0.5s ease forwards;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>错位的礼物 - 互动文字游戏</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>错位的礼物</h1>
+            <div class="game-info">
+                <span class="time-display">00:00 - 01:00</span>
+                <span class="chapter-display">序章</span>
+            </div>
+        </header>
+
+        <main class="game-main">
+            <div class="story-container">
+                <div id="story-text" class="story-text">
+                    <!-- 故事文本将在这里动态显示 -->
+                </div>
+            </div>
+
+            <div class="choices-container" id="choices-container">
+                <!-- 选项按钮将在这里动态生成 -->
+            </div>
+        </main>
+
+        <footer class="game-footer">
+            <div class="game-controls">
+                <button id="save-btn" class="control-btn">保存进度</button>
+                <button id="load-btn" class="control-btn">读取存档</button>
+                <button id="restart-btn" class="control-btn">重新开始</button>
+                <button id="settings-btn" class="control-btn">设置</button>
+            </div>
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 设置面板 -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>游戏设置</h2>
+            <div class="settings-options">
+                <div class="setting-item">
+                    <label for="text-speed">文字速度：</label>
+                    <input type="range" id="text-speed" min="1" max="100" value="50">
+                </div>
+                <div class="setting-item">
+                    <label for="auto-play">自动播放：</label>
+                    <input type="checkbox" id="auto-play">
+                </div>
+                <div class="setting-item">
+                    <label for="sound-effects">音效：</label>
+                    <input type="checkbox" id="sound-effects" checked>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 存档面板 -->
+    <div id="save-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>存档管理</h2>
+            <div id="save-slots" class="save-slots">
+                <!-- 存档槽位将在这里动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <script src="story-data.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
