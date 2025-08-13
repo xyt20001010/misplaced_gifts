@@ -9,6 +9,9 @@ class MisplacedGiftsGame {
             soundEffects: true
         };
         this.saveSlots = [];
+        this.typewriterTimer = null; // 存储打字机效果的定时器
+        this.isTyping = false; // 标记是否正在打字
+        this.currentText = ''; // 存储当前要显示的完整文本
         this.init();
     }
 
@@ -60,27 +63,47 @@ class MisplacedGiftsGame {
 
     // 显示文本（带打字机效果）
     displayText(text) {
+        // 清除之前的打字机效果
+        this.clearTypewriter();
+        
         const storyElement = document.getElementById('story-text');
         storyElement.innerHTML = '';
+        
+        // 保存当前文本
+        this.currentText = text;
         
         if (this.settings.textSpeed === 100) {
             // 立即显示全部文本
             storyElement.textContent = text;
+            this.isTyping = false;
         } else {
             // 打字机效果
+            this.isTyping = true;
             let index = 0;
             const speed = 101 - this.settings.textSpeed;
             
             const typeWriter = () => {
-                if (index < text.length) {
+                if (index < text.length && this.isTyping) {
                     storyElement.textContent += text.charAt(index);
                     index++;
-                    setTimeout(typeWriter, speed);
+                    this.typewriterTimer = setTimeout(typeWriter, speed);
+                } else {
+                    this.isTyping = false;
+                    this.typewriterTimer = null;
                 }
             };
             
             typeWriter();
         }
+    }
+    
+    // 清除打字机效果
+    clearTypewriter() {
+        if (this.typewriterTimer) {
+            clearTimeout(this.typewriterTimer);
+            this.typewriterTimer = null;
+        }
+        this.isTyping = false;
     }
 
     // 显示选项
@@ -176,6 +199,9 @@ class MisplacedGiftsGame {
             return;
         }
         
+        // 清除当前的打字机效果
+        this.clearTypewriter();
+        
         this.currentScene = saveData.currentScene;
         this.gameHistory = saveData.gameHistory;
         this.showScene(this.currentScene);
@@ -186,6 +212,9 @@ class MisplacedGiftsGame {
     // 重新开始
     restartGame() {
         if (confirm('确定要重新开始吗？当前进度将会丢失。')) {
+            // 清除打字机效果
+            this.clearTypewriter();
+            
             this.currentScene = 'start';
             this.gameHistory = [];
             this.showScene(this.currentScene);
@@ -390,10 +419,14 @@ class MisplacedGiftsGame {
 
     // 跳过文本
     skipText() {
-        const storyElement = document.getElementById('story-text');
-        const scene = storyData[this.currentScene];
-        if (scene) {
-            storyElement.textContent = scene.text;
+        // 如果正在打字，立即显示全部文本
+        if (this.isTyping) {
+            // 清除打字机效果
+            this.clearTypewriter();
+            
+            // 立即显示全部文本
+            const storyElement = document.getElementById('story-text');
+            storyElement.textContent = this.currentText;
         }
     }
 
