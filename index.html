@@ -34,6 +34,7 @@
                 <button id="load-btn" class="control-btn">读取存档</button>
                 <button id="restart-btn" class="control-btn">重新开始</button>
                 <button id="settings-btn" class="control-btn">设置</button>
+                <button id="help-btn" class="control-btn">帮助</button>
             </div>
             <div class="progress-bar">
                 <div id="progress-fill" class="progress-fill"></div>
@@ -73,6 +74,51 @@
             </div>
         </div>
     </div>
+
+    <!-- 帮助面板 -->
+    <div id="help-modal" class="modal">
+        <div class="modal-content help-content">
+            <span class="close">&times;</span>
+            <h2>操作指南</h2>
+            <div class="help-sections">
+                <div class="help-section">
+                    <h3>🎮 基础操作</h3>
+                    <ul class="help-list">
+                        <li><strong>点击选项：</strong>选择不同的剧情走向</li>
+                        <li><strong>保存进度：</strong>随时保存当前游戏进度（支持5个存档位）</li>
+                        <li><strong>读取存档：</strong>加载之前保存的游戏进度</li>
+                        <li><strong>重新开始：</strong>从头开始新的冒险</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h3>⌨️ 快捷键</h3>
+                    <ul class="help-list">
+                        <li><kbd>空格</kbd> - 跳过文字动画，立即显示全部文本</li>
+                        <li><kbd>Ctrl</kbd> + <kbd>S</kbd> - 快速保存（存档位1）</li>
+                        <li><kbd>Ctrl</kbd> + <kbd>L</kbd> - 快速加载（存档位1）</li>
+                        <li><kbd>1</kbd> ~ <kbd>5</kbd> - 快速选择对应选项</li>
+                        <li><kbd>H</kbd> - 显示/隐藏帮助</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h3>🎯 游戏提示</h3>
+                    <ul class="help-list">
+                        <li>游戏包含多个分支剧情和5个不同结局</li>
+                        <li>每个选择都会影响故事的发展方向</li>
+                        <li>可以通过存档系统探索不同的剧情路线</li>
+                        <li>注意观察环境描述，可能包含重要线索</li>
+                        <li>某些选择会影响后续剧情的细节</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="help-footer">
+                <p>按 <kbd>ESC</kbd> 或点击关闭按钮退出帮助</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 浮动帮助按钮 -->
+    <div class="floating-help-btn" id="floating-help-btn" title="显示帮助 (H)"></div>
 
     <script src="story-data.js"></script>
     <script src="game.js"></script>

@@ -380,3 +380,129 @@ body {
         transform: translateY(-10px);
     }
 }
+
+/* 帮助面板样式 */
+.help-content {
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.help-sections {
+    margin-top: 20px;
+}
+
+.help-section {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+}
+
+.help-section h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.help-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.help-list li {
+    margin-bottom: 12px;
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.6;
+}
+
+.help-list li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: #667eea;
+}
+
+.help-list strong {
+    color: #333;
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+/* 键盘按键样式 */
+kbd {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 0 #ccc;
+    display: inline-block;
+    font-family: monospace;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    padding: 3px 6px;
+    margin: 0 3px;
+}
+
+.help-footer {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+    text-align: center;
+    color: #666;
+}
+
+/* 浮动帮助按钮 */
+.floating-help-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: #667eea;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.floating-help-btn:hover {
+    background: #764ba2;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(118, 75, 162, 0.5);
+}
+
+.floating-help-btn::after {
+    content: "?";
+    font-weight: bold;
+}
+
+/* 帮助面板滚动条美化 */
+.help-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.help-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.help-content::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 10px;
+}
+
+.help-content::-webkit-scrollbar-thumb:hover {
+    background: #764ba2;
+}

@@ -251,6 +251,16 @@ class MisplacedGiftsGame {
             this.showSettingsModal();
         };
         
+        // 帮助按钮
+        document.getElementById('help-btn').onclick = () => {
+            this.showHelpModal();
+        };
+        
+        // 浮动帮助按钮
+        document.getElementById('floating-help-btn').onclick = () => {
+            this.showHelpModal();
+        };
+        
         // 模态框关闭按钮
         document.querySelectorAll('.close').forEach(closeBtn => {
             closeBtn.onclick = function() {
@@ -301,6 +311,14 @@ class MisplacedGiftsGame {
                 case ' ':
                     e.preventDefault();
                     this.skipText();
+                    break;
+                case 'h':
+                case 'H':
+                    e.preventDefault();
+                    this.toggleHelpModal();
+                    break;
+                case 'Escape':
+                    this.closeAllModals();
                     break;
                 case '1':
                 case '2':
@@ -405,6 +423,30 @@ class MisplacedGiftsGame {
         document.getElementById('text-speed').value = this.settings.textSpeed;
         document.getElementById('auto-play').checked = this.settings.autoPlay;
         document.getElementById('sound-effects').checked = this.settings.soundEffects;
+    }
+
+    // 显示帮助模态框
+    showHelpModal() {
+        const modal = document.getElementById('help-modal');
+        modal.style.display = 'block';
+    }
+
+    // 切换帮助模态框
+    toggleHelpModal() {
+        const modal = document.getElementById('help-modal');
+        if (modal.style.display === 'block') {
+            modal.style.display = 'none';
+        } else {
+            modal.style.display = 'block';
+        }
+    }
+
+    // 关闭所有模态框
+    closeAllModals() {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            modal.style.display = 'none';
+        });
     }
 
     // 快速保存
