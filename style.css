@@ -468,7 +468,7 @@ kbd {
     height: 50px;
     background: var(--btn-primary);
     border-radius: 50%;
-    display: flex;
+    display: none; /* 默认隐藏，游戏开始后显示 */
     align-items: center;
     justify-content: center;
     color: var(--text-light);
@@ -665,5 +665,105 @@ kbd {
     }
     100% {
         background-position: 0% 50%;
+    }
+}
+
+/* 欢迎界面 */
+.welcome-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-middle) 50%, var(--bg-gradient-end) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.welcome-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.welcome-content {
+    text-align: center;
+    padding: 40px;
+    background: var(--bg-white);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    animation: welcomeFadeIn 0.8s ease;
+}
+
+.welcome-title {
+    font-size: 48px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.welcome-subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+}
+
+.welcome-description {
+    margin-bottom: 30px;
+    color: var(--text-primary);
+}
+
+.welcome-description p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.start-game-btn {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    border: none;
+    padding: 15px 50px;
+    font-size: 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    font-weight: 600;
+    margin: 20px 0;
+}
+
+.start-game-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--shadow-hover);
+}
+
+.start-game-btn:active {
+    transform: translateY(0);
+}
+
+.welcome-tips {
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.welcome-tips p {
+    margin: 5px 0;
+}
+
+@keyframes welcomeFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
     }
 }

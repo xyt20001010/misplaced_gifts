@@ -180,7 +180,9 @@ Vein挑了挑眉："确定？Xavier，这可不是你的风格。"
             }
         ],
         chapter: "第二章",
-        time: "19:30 - 20:00"
+        time: "19:30 - 20:00",
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "back_door_entry": {
@@ -206,7 +208,9 @@ Vein眯起眼睛，手指微微动了动。多年的训练让他的反应快如�
             }
         ],
         chapter: "第三章",
-        time: "22:00 - 23:00"
+        time: "22:00 - 23:00",
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "concert_end": {
@@ -230,7 +234,9 @@ Vein眯起眼睛，手指微微动了动。多年的训练让他的反应快如�
         ],
         chapter: "终章",
         time: "23:00 - 00:00",
-        isEnding: true
+        isEnding: true,
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "go_home_play": {
@@ -248,7 +254,9 @@ Vein闻言，眼角眉梢那抹狡黠的笑意瞬间绽开："走啦走啦，回
             }
         ],
         chapter: "第二章",
-        time: "20:00 - 21:00"
+        time: "20:00 - 21:00",
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "start_gaming": {
@@ -270,7 +278,9 @@ Vein嗤笑一声："看不起谁呢？直接来！地狱难度！"`,
             }
         ],
         chapter: "第三章",
-        time: "21:00 - 22:00"
+        time: "21:00 - 22:00",
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "hell_mode": {
@@ -292,7 +302,9 @@ Vein嗤笑一声："看不起谁呢？直接来！地狱难度！"`,
             }
         ],
         chapter: "第四章",
-        time: "23:00 - 00:00"
+        time: "23:00 - 00:00",
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "ghost_question": {
@@ -318,7 +330,9 @@ Vein被这不按常理出牌的一幕搞得有些不知所措。`,
             }
         ],
         chapter: "第四章",
-        time: "23:30 - 00:00"
+        time: "23:30 - 00:00",
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "accept_dance": {
@@ -346,7 +360,9 @@ Vein被这不按常理出牌的一幕搞得有些不知所措。`,
             }
         ],
         chapter: "终章",
-        time: "00:00 - 01:00"
+        time: "00:00 - 01:00",
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "refuse_dance": {
@@ -380,7 +396,9 @@ Boss战瞬间进入狂暴模式。幽灵的攻击速度和伤害都翻倍，舞�
             }
         ],
         chapter: "终章",
-        time: "00:00 - 01:00"
+        time: "00:00 - 01:00",
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "silent_observe": {
@@ -412,7 +430,9 @@ Boss战瞬间进入狂暴模式。幽灵的攻击速度和伤害都翻倍，舞�
             }
         ],
         chapter: "终章",
-        time: "00:00 - 01:00"
+        time: "00:00 - 01:00",
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "vein_confession": {
@@ -444,7 +464,9 @@ Vein沉默了一会儿，然后轻声说："Xavier，你送我的演唱会门票
         ],
         chapter: "终章·完",
         time: "01:00 - 02:00",
-        isEnding: true
+        isEnding: true,
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "bittersweet_end": {
@@ -470,7 +492,9 @@ Vein沉默了一会儿，然后轻声说："Xavier，你送我的演唱会门票
         ],
         chapter: "终章",
         time: "00:00 - 01:00",
-        isEnding: true
+        isEnding: true,
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "thoughtful_end": {
@@ -494,7 +518,9 @@ Vein沉默了一会儿，然后轻声说："Xavier，你送我的演唱会门票
         ],
         chapter: "终章",
         time: "00:00 - 01:00",
-        isEnding: true
+        isEnding: true,
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     }
 };
 

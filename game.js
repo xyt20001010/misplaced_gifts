@@ -19,6 +19,7 @@ class MisplacedGiftsGame {
         this.isTyping = false; // 标记是否正在打字
         this.currentText = ''; // 存储当前要显示的完整文本
         this.audioManager = new AudioManager(); // 音频管理器
+        this.gameStarted = false; // 标记游戏是否已经开始
         this.init();
     }
 
@@ -30,7 +31,53 @@ class MisplacedGiftsGame {
         this.setupThemeListeners();
         // 初始化音频管理器
         this.audioManager.init(this.settings.soundEffects, 0.5);
+        // 不要立即显示场景，等待用户点击开始按钮
+        this.setupWelcomeScreen();
+    }
+    
+    // 设置欢迎界面
+    setupWelcomeScreen() {
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const startBtn = document.getElementById('start-game-btn');
+        
+        if (welcomeScreen && startBtn) {
+            // 显示欢迎界面
+            welcomeScreen.classList.remove('hidden');
+            
+            // 绑定开始按钮事件
+            startBtn.onclick = () => {
+                this.startGame();
+            };
+        } else {
+            // 如果没有欢迎界面，直接开始游戏
+            this.startGame();
+        }
+    }
+    
+    // 开始游戏
+    startGame() {
+        const welcomeScreen = document.getElementById('welcome-screen');
+        
+        // 隐藏欢迎界面
+        if (welcomeScreen) {
+            welcomeScreen.classList.add('hidden');
+            // 延迟后完全移除欢迎界面
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+            }, 500);
+        }
+        
+        // 标记游戏已开始
+        this.gameStarted = true;
+        
+        // 显示第一个场景并播放音频
         this.showScene(this.currentScene);
+        
+        // 显示浮动帮助按钮
+        const floatingHelpBtn = document.getElementById('floating-help-btn');
+        if (floatingHelpBtn) {
+            floatingHelpBtn.style.display = 'flex';
+        }
     }
 
     // 显示场景
@@ -246,7 +293,12 @@ class MisplacedGiftsGame {
             
             this.currentScene = 'start';
             this.gameHistory = [];
-            this.showScene(this.currentScene);
+            
+            // 如果游戏已经开始，直接显示场景
+            // 不再显示欢迎界面，因为用户已经在游戏中了
+            if (this.gameStarted) {
+                this.showScene(this.currentScene);
+            }
             
             // 清除结局效果
             const stars = document.querySelectorAll('.star');
