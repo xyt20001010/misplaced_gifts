@@ -64,6 +64,8 @@ class MisplacedGiftsGame {
             // 延迟后完全移除欢迎界面
             setTimeout(() => {
                 welcomeScreen.style.display = 'none';
+                // 确保欢迎界面不再阻挡交互
+                welcomeScreen.style.pointerEvents = 'none';
             }, 500);
         }
         
