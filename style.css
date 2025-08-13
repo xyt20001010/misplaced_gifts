@@ -7,19 +7,20 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-middle) 50%, var(--bg-gradient-end) 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
+    transition: background 0.5s ease;
 }
 
 /* 游戏容器 */
 .game-container {
     width: 100%;
     max-width: 900px;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--bg-white);
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     overflow: hidden;
@@ -31,12 +32,13 @@ body {
 
 /* 游戏头部 */
 .game-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: var(--text-light);
     padding: 20px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: background 0.5s ease;
 }
 
 .game-header h1 {
@@ -76,7 +78,7 @@ body {
 .story-text {
     font-size: 18px;
     line-height: 1.8;
-    color: #333;
+    color: var(--text-primary);
     max-width: 100%;
     margin: 0 auto;
     white-space: pre-wrap;
@@ -97,8 +99,8 @@ body {
 /* 选项容器 */
 .choices-container {
     padding: 20px 30px;
-    background: #f8f9fa;
-    border-top: 1px solid #e0e0e0;
+    background: var(--bg-light);
+    border-top: 1px solid var(--border-light);
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -108,8 +110,8 @@ body {
 
 .choice-btn {
     background: white;
-    border: 2px solid #667eea;
-    color: #667eea;
+    border: 2px solid var(--border-primary);
+    color: var(--primary-color);
     padding: 15px 25px;
     border-radius: 10px;
     font-size: 16px;
@@ -121,10 +123,10 @@ body {
 }
 
 .choice-btn:hover {
-    background: #667eea;
-    color: white;
+    background: var(--btn-primary);
+    color: var(--text-light);
     transform: translateX(5px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 5px 15px var(--btn-shadow);
 }
 
 .choice-btn::before {
@@ -141,9 +143,9 @@ body {
 
 /* 游戏底部 */
 .game-footer {
-    background: #f8f9fa;
+    background: var(--bg-light);
     padding: 15px 30px;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid var(--border-light);
 }
 
 .game-controls {
@@ -154,8 +156,8 @@ body {
 }
 
 .control-btn {
-    background: #667eea;
-    color: white;
+    background: var(--btn-primary);
+    color: var(--text-light);
     border: none;
     padding: 8px 20px;
     border-radius: 20px;
@@ -165,22 +167,22 @@ body {
 }
 
 .control-btn:hover {
-    background: #764ba2;
+    background: var(--btn-primary-hover);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(118, 75, 162, 0.3);
+    box-shadow: 0 5px 15px var(--btn-shadow-hover);
 }
 
 /* 进度条 */
 .progress-bar {
     height: 6px;
-    background: #e0e0e0;
+    background: var(--border-light);
     border-radius: 3px;
     overflow: hidden;
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     width: 0%;
     transition: width 0.5s ease;
 }
@@ -230,7 +232,7 @@ body {
 }
 
 .close:hover {
-    color: #667eea;
+    color: var(--primary-color);
 }
 
 /* 设置选项 */
@@ -247,7 +249,7 @@ body {
 
 .setting-item label {
     font-size: 16px;
-    color: #333;
+    color: var(--text-primary);
 }
 
 .setting-item input[type="range"] {
@@ -269,7 +271,7 @@ body {
 }
 
 .save-slot {
-    border: 2px solid #e0e0e0;
+    border: 2px solid var(--border-light);
     border-radius: 10px;
     padding: 15px;
     cursor: pointer;
@@ -280,8 +282,8 @@ body {
 }
 
 .save-slot:hover {
-    border-color: #667eea;
-    background: #f8f9fa;
+    border-color: var(--border-primary);
+    background: var(--bg-light);
 }
 
 .save-slot.empty {
@@ -295,7 +297,7 @@ body {
 
 .save-slot-time {
     font-size: 12px;
-    color: #666;
+    color: var(--text-secondary);
     margin-top: 5px;
 }
 
@@ -314,8 +316,8 @@ body {
 }
 
 .save-btn-primary {
-    background: #667eea;
-    color: white;
+    background: var(--btn-primary);
+    color: var(--text-light);
 }
 
 .save-btn-danger {
@@ -395,13 +397,13 @@ body {
 .help-section {
     margin-bottom: 25px;
     padding: 20px;
-    background: #f8f9fa;
+    background: var(--bg-light);
     border-radius: 10px;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid var(--primary-color);
 }
 
 .help-section h3 {
-    color: #667eea;
+    color: var(--primary-color);
     margin-bottom: 15px;
     font-size: 18px;
     display: flex;
@@ -425,11 +427,11 @@ body {
     content: "▸";
     position: absolute;
     left: 0;
-    color: #667eea;
+    color: var(--primary-color);
 }
 
 .help-list strong {
-    color: #333;
+    color: var(--text-primary);
     font-weight: 600;
     margin-right: 5px;
 }
@@ -452,9 +454,9 @@ kbd {
 .help-footer {
     margin-top: 20px;
     padding-top: 15px;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid var(--border-light);
     text-align: center;
-    color: #666;
+    color: var(--text-secondary);
 }
 
 /* 浮动帮助按钮 */
@@ -464,23 +466,23 @@ kbd {
     right: 30px;
     width: 50px;
     height: 50px;
-    background: #667eea;
+    background: var(--btn-primary);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--text-light);
     font-size: 24px;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 5px 15px var(--glow-color);
     transition: all 0.3s ease;
     z-index: 999;
 }
 
 .floating-help-btn:hover {
-    background: #764ba2;
+    background: var(--btn-primary-hover);
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(118, 75, 162, 0.5);
+    box-shadow: 0 8px 20px var(--btn-shadow-hover);
 }
 
 .floating-help-btn::after {
@@ -499,10 +501,169 @@ kbd {
 }
 
 .help-content::-webkit-scrollbar-thumb {
-    background: #667eea;
+    background: var(--primary-color);
     border-radius: 10px;
 }
 
 .help-content::-webkit-scrollbar-thumb:hover {
-    background: #764ba2;
+    background: var(--secondary-color);
+}
+
+/* 主题设置样式 */
+.theme-settings {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid var(--border-light);
+}
+
+.theme-settings h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.theme-select {
+    width: 200px;
+    padding: 8px 12px;
+    border: 2px solid var(--border-light);
+    border-radius: 8px;
+    background: white;
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-select:hover {
+    border-color: var(--primary-color);
+}
+
+.theme-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--glow-color);
+}
+
+/* 自定义颜色选择器 */
+.custom-colors {
+    margin-top: 15px;
+    padding: 15px;
+    background: var(--bg-light);
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+}
+
+.custom-colors .setting-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.custom-colors input[type="color"] {
+    width: 50px;
+    height: 35px;
+    border: 2px solid var(--border-light);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.custom-colors input[type="text"] {
+    width: 100px;
+    padding: 6px 10px;
+    border: 2px solid var(--border-light);
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.custom-colors input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+#apply-custom-theme {
+    margin-top: 10px;
+    width: 100%;
+}
+
+/* 主题预览 */
+.theme-preview {
+    margin-top: 20px;
+}
+
+.preview-box {
+    border: 2px solid var(--border-light);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.preview-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: var(--text-light);
+    padding: 10px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.preview-content {
+    padding: 15px;
+    background: white;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.preview-btn {
+    padding: 8px 16px;
+    background: var(--btn-primary);
+    color: var(--text-light);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.preview-btn:hover {
+    background: var(--btn-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px var(--btn-shadow);
+}
+
+.preview-text {
+    color: var(--text-primary);
+}
+
+/* 彩虹主题特殊样式 */
+[data-theme="rainbow"] .control-btn,
+[data-theme="rainbow"] .preview-btn {
+    background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06ffa5, #ffbe0b, #fb5607);
+    background-size: 300% 300%;
+    animation: rainbow-gradient 3s ease infinite;
+}
+
+[data-theme="rainbow"] .control-btn:hover,
+[data-theme="rainbow"] .preview-btn:hover {
+    background: linear-gradient(45deg, #fb5607, #ffbe0b, #06ffa5, #3a86ff, #8338ec, #ff006e);
+    background-size: 300% 300%;
+    animation: rainbow-gradient 3s ease infinite;
+}
+
+[data-theme="rainbow"] .game-header,
+[data-theme="rainbow"] .preview-header {
+    background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06ffa5, #ffbe0b, #fb5607);
+    background-size: 300% 300%;
+    animation: rainbow-gradient 5s ease infinite;
+}
+
+@keyframes rainbow-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }

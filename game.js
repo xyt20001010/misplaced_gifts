@@ -6,7 +6,13 @@ class MisplacedGiftsGame {
         this.settings = {
             textSpeed: 50,
             autoPlay: false,
-            soundEffects: true
+            soundEffects: true,
+            theme: 'default',
+            customColors: {
+                primary: '#667eea',
+                secondary: '#764ba2',
+                accent: '#9f7aea'
+            }
         };
         this.saveSlots = [];
         this.typewriterTimer = null; // 存储打字机效果的定时器
@@ -18,7 +24,9 @@ class MisplacedGiftsGame {
     init() {
         this.loadSettings();
         this.loadSaves();
+        this.applyTheme(this.settings.theme);
         this.setupEventListeners();
+        this.setupThemeListeners();
         this.showScene(this.currentScene);
     }
 
@@ -537,6 +545,180 @@ class MisplacedGiftsGame {
     playSound(soundName) {
         // 这里可以添加实际的音效播放逻辑
         console.log('Playing sound:', soundName);
+    }
+
+    // 主题管理功能
+    setupThemeListeners() {
+        // 主题选择器
+        const themeSelector = document.getElementById('theme-selector');
+        if (themeSelector) {
+            themeSelector.value = this.settings.theme;
+            themeSelector.onchange = (e) => {
+                const theme = e.target.value;
+                this.applyTheme(theme);
+                this.settings.theme = theme;
+                this.saveSettings();
+                
+                // 显示/隐藏自定义颜色选择器
+                const customColors = document.getElementById('custom-colors');
+                if (customColors) {
+                    customColors.style.display = theme === 'custom' ? 'block' : 'none';
+                }
+            };
+        }
+
+        // 自定义颜色选择器
+        const colorPrimary = document.getElementById('color-primary');
+        const colorPrimaryText = document.getElementById('color-primary-text');
+        const colorSecondary = document.getElementById('color-secondary');
+        const colorSecondaryText = document.getElementById('color-secondary-text');
+        const colorAccent = document.getElementById('color-accent');
+        const colorAccentText = document.getElementById('color-accent-text');
+
+        // 颜色选择器同步
+        if (colorPrimary && colorPrimaryText) {
+            colorPrimary.value = this.settings.customColors.primary;
+            colorPrimaryText.value = this.settings.customColors.primary;
+            
+            colorPrimary.oninput = (e) => {
+                colorPrimaryText.value = e.target.value;
+                this.updateCustomColorPreview();
+            };
+            
+            colorPrimaryText.oninput = (e) => {
+                if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                    colorPrimary.value = e.target.value;
+                    this.updateCustomColorPreview();
+                }
+            };
+        }
+
+        if (colorSecondary && colorSecondaryText) {
+            colorSecondary.value = this.settings.customColors.secondary;
+            colorSecondaryText.value = this.settings.customColors.secondary;
+            
+            colorSecondary.oninput = (e) => {
+                colorSecondaryText.value = e.target.value;
+                this.updateCustomColorPreview();
+            };
+            
+            colorSecondaryText.oninput = (e) => {
+                if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                    colorSecondary.value = e.target.value;
+                    this.updateCustomColorPreview();
+                }
+            };
+        }
+
+        if (colorAccent && colorAccentText) {
+            colorAccent.value = this.settings.customColors.accent;
+            colorAccentText.value = this.settings.customColors.accent;
+            
+            colorAccent.oninput = (e) => {
+                colorAccentText.value = e.target.value;
+                this.updateCustomColorPreview();
+            };
+            
+            colorAccentText.oninput = (e) => {
+                if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                    colorAccent.value = e.target.value;
+                    this.updateCustomColorPreview();
+                }
+            };
+        }
+
+        // 应用自定义主题按钮
+        const applyCustomTheme = document.getElementById('apply-custom-theme');
+        if (applyCustomTheme) {
+            applyCustomTheme.onclick = () => {
+                this.applyCustomTheme();
+            };
+        }
+    }
+
+    // 应用主题
+    applyTheme(themeName) {
+        // 移除所有主题类
+        document.body.removeAttribute('data-theme');
+        
+        // 应用新主题
+        if (themeName !== 'default') {
+            document.body.setAttribute('data-theme', themeName);
+        }
+        
+        // 如果是自定义主题，应用自定义颜色
+        if (themeName === 'custom') {
+            this.applyCustomColors();
+        }
+    }
+
+    // 应用自定义颜色
+    applyCustomColors() {
+        const root = document.documentElement;
+        const colors = this.settings.customColors;
+        
+        root.style.setProperty('--custom-primary', colors.primary);
+        root.style.setProperty('--custom-secondary', colors.secondary);
+        root.style.setProperty('--custom-accent', colors.accent);
+        
+        // 计算阴影颜色
+        const primaryRgb = this.hexToRgb(colors.primary);
+        const secondaryRgb = this.hexToRgb(colors.secondary);
+        
+        if (primaryRgb && secondaryRgb) {
+            root.style.setProperty('--custom-shadow', `rgba(${primaryRgb.r}, ${primaryRgb.g}, ${primaryRgb.b}, 0.3)`);
+            root.style.setProperty('--custom-shadow-hover', `rgba(${secondaryRgb.r}, ${secondaryRgb.g}, ${secondaryRgb.b}, 0.3)`);
+            root.style.setProperty('--custom-glow', `rgba(${primaryRgb.r}, ${primaryRgb.g}, ${primaryRgb.b}, 0.4)`);
+        }
+    }
+
+    // 应用自定义主题
+    applyCustomTheme() {
+        const colorPrimary = document.getElementById('color-primary').value;
+        const colorSecondary = document.getElementById('color-secondary').value;
+        const colorAccent = document.getElementById('color-accent').value;
+        
+        this.settings.customColors = {
+            primary: colorPrimary,
+            secondary: colorSecondary,
+            accent: colorAccent
+        };
+        
+        this.settings.theme = 'custom';
+        this.applyTheme('custom');
+        this.saveSettings();
+        
+        this.showNotification('自定义主题已应用');
+    }
+
+    // 更新自定义颜色预览
+    updateCustomColorPreview() {
+        const previewBox = document.querySelector('.preview-box');
+        if (previewBox) {
+            const colorPrimary = document.getElementById('color-primary').value;
+            const colorSecondary = document.getElementById('color-secondary').value;
+            
+            const previewHeader = previewBox.querySelector('.preview-header');
+            const previewBtn = previewBox.querySelector('.preview-btn');
+            
+            if (previewHeader) {
+                previewHeader.style.background = `linear-gradient(135deg, ${colorPrimary} 0%, ${colorSecondary} 100%)`;
+            }
+            
+            if (previewBtn) {
+                previewBtn.style.background = colorPrimary;
+            }
+        }
+    }
+
+    // 十六进制颜色转RGB
+    hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
     }
 }
 

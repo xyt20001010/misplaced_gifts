@@ -1,0 +1,175 @@
+/* 主题颜色变量定义 */
+:root {
+    /* 默认主题 - 蓝紫渐变 */
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --accent-color: #9f7aea;
+    
+    /* 背景渐变 */
+    --bg-gradient-start: #667eea;
+    --bg-gradient-middle: #7c3aed;
+    --bg-gradient-end: #764ba2;
+    
+    /* 按钮颜色 */
+    --btn-primary: #667eea;
+    --btn-primary-hover: #764ba2;
+    --btn-shadow: rgba(102, 126, 234, 0.3);
+    --btn-shadow-hover: rgba(118, 75, 162, 0.3);
+    
+    /* 文本颜色 */
+    --text-primary: #333;
+    --text-secondary: #666;
+    --text-light: white;
+    
+    /* 背景颜色 */
+    --bg-white: rgba(255, 255, 255, 0.95);
+    --bg-light: #f8f9fa;
+    --bg-modal: rgba(0, 0, 0, 0.5);
+    
+    /* 边框颜色 */
+    --border-light: #e0e0e0;
+    --border-primary: #667eea;
+    
+    /* 特殊效果 */
+    --glow-color: rgba(102, 126, 234, 0.4);
+}
+
+/* 预设主题 */
+
+/* 暖色主题 - 橙红渐变 */
+[data-theme="warm"] {
+    --primary-color: #ff6b6b;
+    --secondary-color: #feca57;
+    --accent-color: #ff9ff3;
+    
+    --bg-gradient-start: #ff6b6b;
+    --bg-gradient-middle: #ff8787;
+    --bg-gradient-end: #feca57;
+    
+    --btn-primary: #ff6b6b;
+    --btn-primary-hover: #ff5252;
+    --btn-shadow: rgba(255, 107, 107, 0.3);
+    --btn-shadow-hover: rgba(255, 82, 82, 0.3);
+    
+    --border-primary: #ff6b6b;
+    --glow-color: rgba(255, 107, 107, 0.4);
+}
+
+/* 冷色主题 - 青蓝渐变 */
+[data-theme="cool"] {
+    --primary-color: #0fbcf9;
+    --secondary-color: #00d2d3;
+    --accent-color: #4bcffa;
+    
+    --bg-gradient-start: #0fbcf9;
+    --bg-gradient-middle: #17c0eb;
+    --bg-gradient-end: #00d2d3;
+    
+    --btn-primary: #0fbcf9;
+    --btn-primary-hover: #00a8e8;
+    --btn-shadow: rgba(15, 188, 249, 0.3);
+    --btn-shadow-hover: rgba(0, 168, 232, 0.3);
+    
+    --border-primary: #0fbcf9;
+    --glow-color: rgba(15, 188, 249, 0.4);
+}
+
+/* 自然主题 - 绿色渐变 */
+[data-theme="nature"] {
+    --primary-color: #10ac84;
+    --secondary-color: #00d47f;
+    --accent-color: #1dd1a1;
+    
+    --bg-gradient-start: #10ac84;
+    --bg-gradient-middle: #1abc9c;
+    --bg-gradient-end: #00d47f;
+    
+    --btn-primary: #10ac84;
+    --btn-primary-hover: #0e9670;
+    --btn-shadow: rgba(16, 172, 132, 0.3);
+    --btn-shadow-hover: rgba(14, 150, 112, 0.3);
+    
+    --border-primary: #10ac84;
+    --glow-color: rgba(16, 172, 132, 0.4);
+}
+
+/* 深色主题 */
+[data-theme="dark"] {
+    --primary-color: #4a5568;
+    --secondary-color: #2d3748;
+    --accent-color: #718096;
+    
+    --bg-gradient-start: #4a5568;
+    --bg-gradient-middle: #3a4152;
+    --bg-gradient-end: #2d3748;
+    
+    --btn-primary: #4a5568;
+    --btn-primary-hover: #2d3748;
+    --btn-shadow: rgba(74, 85, 104, 0.3);
+    --btn-shadow-hover: rgba(45, 55, 72, 0.3);
+    
+    --text-primary: #e2e8f0;
+    --text-secondary: #a0aec0;
+    --bg-white: rgba(45, 55, 72, 0.95);
+    --bg-light: #2d3748;
+    
+    --border-primary: #4a5568;
+    --glow-color: rgba(74, 85, 104, 0.4);
+}
+
+/* 多彩主题 - 彩虹效果 */
+[data-theme="rainbow"] {
+    --primary-color: #ff006e;
+    --secondary-color: #8338ec;
+    --accent-color: #3a86ff;
+    
+    --bg-gradient-start: #ff006e;
+    --bg-gradient-middle: #8338ec;
+    --bg-gradient-end: #3a86ff;
+    
+    --btn-primary: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06ffa5, #ffbe0b, #fb5607);
+    --btn-primary-hover: linear-gradient(45deg, #fb5607, #ffbe0b, #06ffa5, #3a86ff, #8338ec, #ff006e);
+    --btn-shadow: rgba(131, 56, 236, 0.3);
+    --btn-shadow-hover: rgba(255, 0, 110, 0.3);
+    
+    --border-primary: #8338ec;
+    --glow-color: rgba(131, 56, 236, 0.4);
+}
+
+/* 优雅主题 - 粉紫渐变 */
+[data-theme="elegant"] {
+    --primary-color: #ee9ca7;
+    --secondary-color: #c471ed;
+    --accent-color: #ffdde1;
+    
+    --bg-gradient-start: #ee9ca7;
+    --bg-gradient-middle: #da85c7;
+    --bg-gradient-end: #c471ed;
+    
+    --btn-primary: #ee9ca7;
+    --btn-primary-hover: #c471ed;
+    --btn-shadow: rgba(238, 156, 167, 0.3);
+    --btn-shadow-hover: rgba(196, 113, 237, 0.3);
+    
+    --border-primary: #ee9ca7;
+    --glow-color: rgba(238, 156, 167, 0.4);
+}
+
+/* 自定义主题 - 用户可以设置的三种颜色 */
+[data-theme="custom"] {
+    --primary-color: var(--custom-primary, #667eea);
+    --secondary-color: var(--custom-secondary, #764ba2);
+    --accent-color: var(--custom-accent, #9f7aea);
+    
+    --bg-gradient-start: var(--custom-primary, #667eea);
+    --bg-gradient-middle: var(--custom-secondary, #764ba2);
+    --bg-gradient-end: var(--custom-accent, #9f7aea);
+    
+    --btn-primary: var(--custom-primary, #667eea);
+    --btn-primary-hover: var(--custom-secondary, #764ba2);
+    --btn-shadow: var(--custom-shadow, rgba(102, 126, 234, 0.3));
+    --btn-shadow-hover: var(--custom-shadow-hover, rgba(118, 75, 162, 0.3));
+    
+    --border-primary: var(--custom-primary, #667eea);
+    --glow-color: var(--custom-glow, rgba(102, 126, 234, 0.4));
+}
