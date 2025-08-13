@@ -18,7 +18,9 @@ const storyData = {
             }
         ],
         chapter: "序章",
-        time: "00:00 - 01:00"
+        time: "00:00 - 01:00",
+        audio: "audio/forest_mixtape.mp3",  // 开始场景的背景音乐
+        audioLoop: true
     },
 
     "ignore_vein": {
@@ -34,7 +36,9 @@ const storyData = {
             }
         ],
         chapter: "序章",
-        time: "00:00 - 01:00"
+        time: "00:00 - 01:00",
+        audio: "audio/forest_mixtape.mp3",  // 继续使用同一音频，不会重新播放
+        audioLoop: true
     },
 
     "open_door": {
@@ -60,7 +64,9 @@ Vein今天穿了件质感极佳的紫色衬衫，下身的黑色高腰西装裤�
             }
         ],
         chapter: "第一章",
-        time: "02:00 - 03:00"
+        time: "02:00 - 03:00",
+        audio: "audio/forest_mixtape.mp3",  // 同一音频会继续播放，不重新开始
+        audioLoop: true
     },
 
     "polite_refuse": {

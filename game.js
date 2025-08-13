@@ -18,6 +18,7 @@ class MisplacedGiftsGame {
         this.typewriterTimer = null; // 存储打字机效果的定时器
         this.isTyping = false; // 标记是否正在打字
         this.currentText = ''; // 存储当前要显示的完整文本
+        this.audioManager = new AudioManager(); // 音频管理器
         this.init();
     }
 
@@ -27,6 +28,8 @@ class MisplacedGiftsGame {
         this.applyTheme(this.settings.theme);
         this.setupEventListeners();
         this.setupThemeListeners();
+        // 初始化音频管理器
+        this.audioManager.init(this.settings.soundEffects, 0.5);
         this.showScene(this.currentScene);
     }
 
@@ -43,6 +46,18 @@ class MisplacedGiftsGame {
         
         // 更新章节和时间显示
         this.updateHeader(scene);
+        
+        // 处理音频播放
+        if (scene.audio && this.settings.soundEffects) {
+            this.audioManager.play(scene.audio, {
+                loop: scene.audioLoop !== false,
+                fadeIn: true,
+                forceRestart: false  // 不强制重新开始，实现连续播放
+            });
+        } else if (!scene.audio && this.audioManager.currentAudioPath) {
+            // 如果新场景没有音频，暂停当前音频
+            this.audioManager.pause(null, true);
+        }
         
         // 显示故事文本
         this.displayText(scene.text);
@@ -210,6 +225,9 @@ class MisplacedGiftsGame {
         // 清除当前的打字机效果
         this.clearTypewriter();
         
+        // 停止当前音频，准备加载新场景的音频
+        this.audioManager.stopAll();
+        
         this.currentScene = saveData.currentScene;
         this.gameHistory = saveData.gameHistory;
         this.showScene(this.currentScene);
@@ -222,6 +240,9 @@ class MisplacedGiftsGame {
         if (confirm('确定要重新开始吗？当前进度将会丢失。')) {
             // 清除打字机效果
             this.clearTypewriter();
+            
+            // 停止所有音频
+            this.audioManager.stopAll();
             
             this.currentScene = 'start';
             this.gameHistory = [];
@@ -296,7 +317,19 @@ class MisplacedGiftsGame {
         
         document.getElementById('sound-effects').onchange = (e) => {
             this.settings.soundEffects = e.target.checked;
+            this.audioManager.setEnabled(e.target.checked);
             this.saveSettings();
+            // 如果重新启用音效，恢复当前场景的音频
+            if (e.target.checked) {
+                const scene = storyData[this.currentScene];
+                if (scene && scene.audio) {
+                    this.audioManager.play(scene.audio, {
+                        loop: scene.audioLoop !== false,
+                        fadeIn: true,
+                        forceRestart: false
+                    });
+                }
+            }
         };
         
         // 键盘快捷键
