@@ -86,7 +86,9 @@ Vein眼中闪过一丝失望，但很快被理解的神色取代。"没关系，
             }
         ],
         chapter: "第一章",
-        time: "02:00 - 03:00"
+        time: "02:00 - 03:00",
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "accept_game": {
@@ -106,7 +108,9 @@ Vein的眼睛瞬间亮了起来，那种近乎孩子般的兴奋让刘枭觉得�
             }
         ],
         chapter: "第一章",
-        time: "18:00 - 19:00"
+        time: "18:00 - 19:00",
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "concert_invitation": {
@@ -126,7 +130,9 @@ Vein看着手中的门票，又看看刘枭疲惫的脸，做了个决定。
             }
         ],
         chapter: "第一章",
-        time: "18:00 - 19:00"
+        time: "18:00 - 19:00",
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "concert_venue": {
@@ -158,7 +164,9 @@ Vein垂下眼睫，再抬起时，那空茫已被一种近乎野性的狡黠光�
             }
         ],
         chapter: "第二章",
-        time: "19:00 - 20:00"
+        time: "19:00 - 20:00",
+        audio: "audio/forest_mixtape.mp3",
+        audioLoop: true
     },
 
     "sneak_in": {
